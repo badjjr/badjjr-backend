@@ -6,10 +6,20 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    body: {
-      
-    }
-  }
+    question: {
+      type: String,
+      required: true,
+    },
+    correctAnswer: {
+      type: String,
+      required: true
+    },
+    incorrectAnswer: [{
+      type: String,
+      required: true,
+    }]
+  },
+  { timestamps: true }
 );
 
 module.exports = questionSchema;
