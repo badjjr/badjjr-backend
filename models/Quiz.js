@@ -1,4 +1,5 @@
 const mongoose = require('../db/connection');
+const questionSchema = require('./Question');
 
 const quizSchema = new mongoose.Schema(
 	{
@@ -6,9 +7,10 @@ const quizSchema = new mongoose.Schema(
 		numberOfQuestions: Number,
 		category: String,
 		questions: [questionSchema],
-		creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		// creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	},
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model('Quiz', quizSchema);
+const Quiz = mongoose.model('Quiz', quizSchema);
+module.exports = Quiz;

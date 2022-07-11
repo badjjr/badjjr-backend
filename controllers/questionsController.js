@@ -23,15 +23,18 @@ router.get('/:id', async (req, res, next) => {
 
 // CREATE
 // POST /api/Questions
+
 router.post('/', async (req, res, next) => {
 	try {
 		const newQuestion = await Question.create(req.body);
-		Question.find({}).then((Questions) => {
-			// Send back 201 Created and the Questions list with the newly add Question
-			return res.status(201).json(Questions);
-		});
-	} catch (err) {
-		next(err);
+		if (newQuestion) {
+			const questions = await Question.find({});
+			return res.status(201).json(questions);
+		} else {
+			return res.sendStatus(400);
+		}
+	} catch {
+		return res.sendStatus(400);
 	}
 });
 
