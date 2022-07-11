@@ -4,20 +4,23 @@ const Quiz = require('../models/Quiz');
 
 // INDEX
 // GET /api/quizzes
-router.get('/', (req, res, next) => {
-	Quiz.find()
-		.then((quizzes) => res.json(books))
-		.catch(next);
+router.get('/', async (req, res) => {
+	try {
+		const quizzes = await Quiz.find({});
+		res.json(quizzes);
+	} catch (err) {
+		return res.sendStatus(400);
+	}
 });
 
 // SHOW
 // GET /api/quizzes/:id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', async (req, res) => {
 	try {
 		const quiz = await Quiz.findById(req.params.id);
 		res.json(quiz);
 	} catch (err) {
-		next(err);
+		return res.sendStatus(400);
 	}
 });
 
@@ -26,12 +29,13 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	try {
 		const newQuiz = await Quiz.create(req.body);
-		Quiz.find({}).then((quizzes) => {
-			// Send back 201 Created and the quizzes list with the newly add quiz
-			return res.status(201).json(quizzes);
-		});
-	} catch (err) {
-		next(err);
+		if (newQuiz) {
+			const quizzes = await Quiz.find({});
+			// Send status code 202 Accepted.
+			return res.status(202).json(quizzes);
+		}
+	} catch {
+		return res.sendStatus(400);
 	}
 });
 
@@ -39,12 +43,13 @@ router.post('/', async (req, res, next) => {
 // PUT /api/quizzes/:id
 router.put('/:id', async (req, res, next) => {
 	try {
-		const updateQuiz = await Quiz.findByIdAndUpdate(req.params.id, req.body);
-		Quiz.find({}).then((quizzes) => {
+		const updatedQuiz = await Quiz.findByIdAndUpdate(req.params.id, req.body);
+		if (updatedQuiz) {
+			const quizzes = await Quiz.find({});
 			return res.json(quizzes);
-		});
+		}
 	} catch (err) {
-		next(err);
+		return res.sendStatus(400);
 	}
 });
 
@@ -53,11 +58,12 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
 	try {
 		const deletedQuiz = await Quiz.findByIdAndDelete(req.params.id);
-		Quiz.find({}).then((quizzes) => {
+		if (deletedQuiz) {
+			const quizzes = await Quiz.find({});
 			return res.json(quizzes);
-		});
+		}
 	} catch (err) {
-		next(err);
+		return res.sendStatus(400);
 	}
 });
 
