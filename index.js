@@ -35,7 +35,6 @@ app.use('/api/quizzes/', quizzesController);
 const questionsController = require('./controllers/questionsController');
 app.use('/api/questions', questionsController);
 
-
 // // The catch all for handling errors
 // const { handleErrors } = require('./middleware/custom_errors');
 // app.use(handleErrors);
