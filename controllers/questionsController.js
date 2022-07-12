@@ -4,20 +4,23 @@ const Question = require('../models/Question');
 
 // INDEX
 // GET /api/Questions
-router.get('/', (req, res, next) => {
-	Question.find()
-		.then((Questions) => res.json(Questions))
-		.catch(next);
+router.get('/', async (req, res) => {
+	try {
+		const questions = await Question.find({});
+		res.json(questions);
+	} catch (err) {
+		return res.sendStatus(400);
+	}
 });
 
 // SHOW
 // GET /api/Questions/:id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', async (req, res) => {
 	try {
-		const Question = await Question.findById(req.params.id);
-		res.json(Question);
+		const question = await Question.findById(req.params.id);
+		res.json(question);
 	} catch (err) {
-		next(err);
+		return res.sendStatus(400);
 	}
 });
 
@@ -26,44 +29,54 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 	try {
-		const newQuestion = await Question.create(req.body);
-		if (newQuestion) {
-			const questions = await Question.find({});
-			return res.status(201).json(questions);
-		} else {
-			return res.sendStatus(400);
-		}
-	} catch {
+		const newQuestion = req.body;
+		const quizId = req.body.quizId;
+		const quiz = await Quiz.findById(quizId)
+			.then((quiz) => {
+				quiz.questions.push(newQuestion);
+				return quiz.save();
+			})
+			.then((updatedQuiz) => res.json(updatedQuiz));
+	} catch (err) {
 		return res.sendStatus(400);
 	}
 });
 
 // UPDATE
-// PUT /api/Questionzes/:id
+// PUT /api/Questions/:id
 router.put('/:id', async (req, res, next) => {
 	try {
-		const updateQuestion = await Question.findByIdAndUpdate(
+		const quizId = req.body.quizId;
+
+		const quizzesId = await Quiz.findById(quizId).then((quiz) => {
+			const quizToUpdate = quiz.questions.id(req.params.id);
+			quizToUpdate.set(req.body);
+			return quiz.save();
+		});
+		const updatedQuestion = await Question.findByIdAndUpdate(
 			req.params.id,
 			req.body
 		);
-		Question.find({}).then((Questions) => {
-			return res.json(Questions);
-		});
+		if (updatedQuestion) {
+			const questions = await Question.find({});
+			return res.json(questions);
+		}
 	} catch (err) {
-		next(err);
+		return res.sendStatus(400);
 	}
 });
 
 // DESTROY
-// DELETE /api/Questionzes/:id
+// DELETE /api/Questions/:id
 router.delete('/:id', async (req, res, next) => {
 	try {
-		const deletedQuestion = await Question.findByIdAndDelete(req.params.id);
-		Question.find({}).then((Questions) => {
-			return res.json(Questions);
-		});
+		const deletedQuestion = await Quiz.findByIdAndDelete(req.params.id);
+		if (deletedQuestion) {
+			const question = await Question.find({});
+			return res.json(question);
+		}
 	} catch (err) {
-		next(err);
+		return res.sendStatus(400);
 	}
 });
 

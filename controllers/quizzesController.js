@@ -32,8 +32,6 @@ router.post('/', async (req, res, next) => {
 		if (newQuiz) {
 			const quizzes = await Quiz.find({});
 			return res.status(201).json(quizzes);
-		} else {
-			return res.sendStatus(400);
 		}
 	} catch {
 		return res.sendStatus(400);
