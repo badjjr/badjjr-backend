@@ -3,9 +3,20 @@ const questionSchema = require('./Question');
 
 const quizSchema = new mongoose.Schema(
 	{
-		title: String,
-		numberOfQuestions: Number,
-		category: String,
+		title: {
+			type: String,
+			required: true,
+			unique: false
+		},
+		numberOfQuestions: {
+			type: Number,
+			required: true,
+		},
+		category: {
+			type: String,
+			required: true,
+			unique: false
+		},
 		questions: [questionSchema],
 	},
 	{ timestamps: true }
