@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Quiz = require('../models/Quiz');
 
-// INDEX
+// INDEX: get all quizzes
 // GET /api/quizzes
 router.get('/', async (req, res) => {
 	try {
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// SHOW
+// SHOW: get quiz by id
 // GET /api/quizzes/:id
 router.get('/:id', async (req, res) => {
 	try {
@@ -24,21 +24,22 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
-// CREATE
+// CREATE: add new quiz
 // POST /api/quizzes
 router.post('/', async (req, res, next) => {
 	try {
 		const newQuiz = await Quiz.create(req.body);
 		if (newQuiz) {
 			const quizzes = await Quiz.find({});
-			return res.status(201).json(quizzes);
+			// Send status code 202 Accepted.
+			return res.status(202).json(quizzes);
 		}
 	} catch {
 		return res.sendStatus(400);
 	}
 });
 
-// UPDATE
+// UPDATE: update quiz by id
 // PUT /api/quizzes/:id
 router.put('/:id', async (req, res, next) => {
 	try {
@@ -52,7 +53,7 @@ router.put('/:id', async (req, res, next) => {
 	}
 });
 
-// DESTROY
+// DELETE: remove quiz by id
 // DELETE /api/quizzes/:id
 router.delete('/:id', async (req, res, next) => {
 	try {

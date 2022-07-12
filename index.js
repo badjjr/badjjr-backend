@@ -43,5 +43,5 @@ app.use('/api/questions', questionsController);
 // START SERVER
 //=============================================================================
 app.listen(app.get('port'), () => {
-	console.log(`✅ Listening on port ${app.get('port')}`);
+	console.log(`✅ BadJJR API 🦡 is listening on port ${app.get('port')}`);
 });

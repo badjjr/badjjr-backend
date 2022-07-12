@@ -3,7 +3,7 @@ const router = express.Router();
 const Question = require('../models/Question');
 const Quiz = require('../models/Quiz');
 
-// CREATE
+// CREATE: add new question
 // POST /api/questions
 router.post('/', async (req, res) => {
 	try {
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 	}
 });
 
-// UPDATE
+// UPDATE: update question by id
 // PUT /api/questions/:id
 router.patch('/:id', async (req, res) => {
 	try {
@@ -51,7 +51,7 @@ router.patch('/:id', async (req, res) => {
 	}
 });
 
-// DESTROY
+// DELETE: Remove question by id
 // DELETE /api/questions/:id
 router.delete('/:id', async (req, res, next) => {
 	try {
