@@ -1,6 +1,7 @@
 const mongoose = require('../db/connection');
 
 const questionSchema = new mongoose.Schema(
+
 	{
 		type: {
 			type: String,
@@ -33,3 +34,4 @@ const questionSchema = new mongoose.Schema(
 );
 
 module.exports = questionSchema;
+
