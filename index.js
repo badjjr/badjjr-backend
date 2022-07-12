@@ -32,10 +32,8 @@ const quizzesController = require('./controllers/quizzesController');
 app.use('/api/quizzes/', quizzesController);
 
 //questions controller
-
 const questionsController = require('./controllers/questionsController');
 app.use('/api/questions', questionsController);
-
 
 // // The catch all for handling errors
 // const { handleErrors } = require('./middleware/custom_errors');
@@ -45,5 +43,5 @@ app.use('/api/questions', questionsController);
 // START SERVER
 //=============================================================================
 app.listen(app.get('port'), () => {
-	console.log(`✅ Listening on port ${app.get('port')}`);
+	console.log(`✅ BadJJR API 🦡 is listening on port ${app.get('port')}`);
 });

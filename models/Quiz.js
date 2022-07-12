@@ -7,7 +7,6 @@ const quizSchema = new mongoose.Schema(
 		numberOfQuestions: Number,
 		category: String,
 		questions: [questionSchema],
-		// creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	},
 	{ timestamps: true }
 );

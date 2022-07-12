@@ -1,7 +1,6 @@
 const mongoose = require('../db/connection');
 
 const questionSchema = new mongoose.Schema(
-
 	{
 		type: {
 			type: String,
@@ -15,17 +14,15 @@ const questionSchema = new mongoose.Schema(
 			{
 				type: String,
 				required: true,
-				unique: true,
 			},
 		],
-
 		correctAnswer: {
 			type: String,
 			required: true,
 		},
 		incorrectAnswers: [
 			{
-				type: Array,
+				type: String,
 				required: true,
 			},
 		],
@@ -34,4 +31,3 @@ const questionSchema = new mongoose.Schema(
 );
 
 module.exports = questionSchema;
-
