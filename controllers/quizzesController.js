@@ -31,8 +31,10 @@ router.post('/', async (req, res, next) => {
 		const newQuiz = await Quiz.create(req.body);
 		if (newQuiz) {
 			const quizzes = await Quiz.find({});
+
 			// Send status code 202 Accepted.
 			return res.status(202).json(quizzes);
+
 		}
 	} catch {
 		return res.sendStatus(400);
