@@ -39,16 +39,13 @@ router.get('/categories/:category', async (req, res) => {
 // POST /api/quizzes
 router.post('/', async (req, res, next) => {
 	try {
-		console.log('first log:', req.body)
 		const newQuiz = await Quiz.create(req.body);
-		console.log('new quiz:', newQuiz)
 		if (newQuiz) {
 			const quizzes = await Quiz.find({});
 			// Send status code 202 Accepted.
 			return res.status(202).json(quizzes);
 		}
 	} catch (error) {
-		console.log('error:', error)
 		return res.sendStatus(400);
 	}
 });
