@@ -2,40 +2,44 @@ const express = require('express');
 const router = express.Router();
 const Quiz = require('../models/Quiz');
 
-// INDEX: get all quizzes
+// INDEX: Get all quizzes
 // GET /api/quizzes
 router.get('/', async (req, res) => {
 	try {
 		const quizzes = await Quiz.find({});
 		res.json(quizzes);
 	} catch (err) {
+		console.log('Something went wrong...', err);
 		return res.sendStatus(400);
 	}
 });
 
-// SHOW: get quiz by id
+// SHOW: Get quiz by id
 // GET /api/quizzes/:id
 router.get('/:id', async (req, res) => {
 	try {
 		const quiz = await Quiz.findById(req.params.id);
 		res.json(quiz);
 	} catch (err) {
+		console.log('Something went wrong...', err);
 		return res.sendStatus(400);
 	}
 });
 
-// SHOW: get quizzes by category
+// SHOW: Get quizzes by category
 // GET /api/quizzes/:category
 router.get('/categories/:category', async (req, res) => {
 	try {
-		const quizCategory = req.params.category
+		const quizCategory = req.params.category;
 		const quizzes = await Quiz.find({ category: quizCategory });
-		res.json(quizzes)
+		res.json(quizzes);
+	} catch (err) {
+		console.log('Something went wrong...', err);
+		return res.sendStatus(400);
 	}
-	catch {}
-})
+});
 
-// CREATE: add new quiz
+// CREATE: Add new quiz
 // POST /api/quizzes
 router.post('/', async (req, res, next) => {
 	try {
@@ -45,14 +49,15 @@ router.post('/', async (req, res, next) => {
 			// Send status code 202 Accepted.
 			return res.status(202).json(quizzes);
 		}
-	} catch (error) {
+	} catch (err) {
+		console.log('Something went wrong...', err);
 		return res.sendStatus(400);
 	}
 });
 
-// UPDATE: update quiz by id
-// PUT /api/quizzes/:id
-router.put('/:id', async (req, res, next) => {
+// UPDATE: Update quiz by id
+// PATCH /api/quizzes/:id
+router.patch('/:id', async (req, res, next) => {
 	try {
 		const updatedQuiz = await Quiz.findByIdAndUpdate(req.params.id, req.body);
 		if (updatedQuiz) {
@@ -60,11 +65,12 @@ router.put('/:id', async (req, res, next) => {
 			return res.json(quizzes);
 		}
 	} catch (err) {
+		console.log('Something went wrong...', err);
 		return res.sendStatus(400);
 	}
 });
 
-// DELETE: remove quiz by id
+// DELETE: Remove quiz by id
 // DELETE /api/quizzes/:id
 router.delete('/:id', async (req, res, next) => {
 	try {
@@ -74,6 +80,7 @@ router.delete('/:id', async (req, res, next) => {
 			return res.json(quizzes);
 		}
 	} catch (err) {
+		console.log('Something went wrong...', err);
 		return res.sendStatus(400);
 	}
 });
