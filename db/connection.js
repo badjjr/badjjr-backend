@@ -17,11 +17,11 @@ db.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
 db.on('connected', () => console.log('mongo connected at: ', mongoURI));
 db.on('disconnected', () => console.log('mongo disconnected'));
 
-// Open the Connection
+// Open the connection
 db.on('open', () => {
-	console.log('✅ mongo connection made!');
+	console.log('✅ Mongo connection made!');
 });
 
-// now, our mongoose instance has a configured connection to our local db, in addition
-// to its model configuration and can be exported to other files
+// Now our mongoose instance has a configured connection to our local db in 
+// addition to its model configuration and can be exported to other files
 module.exports = mongoose;
