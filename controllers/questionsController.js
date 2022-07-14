@@ -3,7 +3,7 @@ const router = express.Router();
 const Question = require('../models/Question');
 const Quiz = require('../models/Quiz');
 
-// CREATE: Add new question
+// CREATE: Add questions
 // POST /api/questions
 router.post('/', async (req, res) => {
 	try {
