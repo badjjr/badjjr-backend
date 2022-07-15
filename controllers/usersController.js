@@ -5,8 +5,8 @@ const router = express.Router();
 const { createUserToken } = require('../middleware/auth');
 
 //Create User/Sign Up
-//Post /api/createUser
-router.post('/createUser', async (req, res, next) => {
+//Post /api/user/new
+router.post('/user/new', async (req, res, next) => {
 	try {
 		const hashedPassword = await bcrypt.hash(req.body.password, 5);
 		const newUser = await User.create({
@@ -22,8 +22,8 @@ router.post('/createUser', async (req, res, next) => {
 });
 
 //Show User/Sign In
-//Post /api/showUser
-router.post('/showUser', async (req, res, next) => {
+//Post /api/user
+router.post('/user', async (req, res, next) => {
 	try {
 		const signIn = await User.findOne({ username: req.body.username })
 			.then((user) => createUserToken(req, user))
