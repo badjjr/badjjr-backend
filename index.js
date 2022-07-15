@@ -39,6 +39,11 @@ app.use('/api/questions', questionsController);
 const usersController = require('./controllers/usersController')
 app.use('/api', usersController)
 
+//Redirect
+app.all('*', (req, res) => {
+	res.redirect('/')
+})
+
 //Error handling for user auth
 const { handleErrors } = require('./middleware/custom_errors')
 app.use(handleErrors)
