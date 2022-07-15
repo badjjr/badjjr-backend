@@ -30,7 +30,7 @@ It follows a RESTful architectural style and has full CRUD functionality. Here i
 
 ## Technologies
 
-The backend utilizes MongoDB, Express, Mongoose, CORS, as well Heroku (for deployment) Passport (for authentication), and Bcrypt (for encryption).
+The backend utilizes MongoDB, Express, Mongoose, CORS, as well as Heroku (for deployment) Passport (for authentication), and Bcrypt (for encryption).
 
 ## Installation
 
