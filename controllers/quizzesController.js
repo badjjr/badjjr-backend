@@ -60,15 +60,14 @@ router.post('/', async (req, res, next) => {
 // PATCH /api/quizzes/:id
 router.patch('/:id', async (req, res, next) => {
 	try {
-		const quiz = await Quiz.findById(req.params.id);
-			Quiz.findByIdAndUpdate(req.params.id, req.body, {new: true})
-			.then((quiz) => res.json(quiz))
-			.catch(next)
-
+		const updatedQuiz = await Quiz.findByIdAndUpdate(req.params.id, req.body);
+		if (updatedQuiz) {
+			const quizzes = await Quiz.find({});
+			return res.json(quizzes);
+		}
 	} catch (err) {
 		console.log('Something went wrong...', err);
-		res.sendStatus(400);
-		next(err);
+		return res.sendStatus(400);
 	}
 });
 
@@ -83,8 +82,7 @@ router.delete('/:id', async (req, res, next) => {
 		}
 	} catch (err) {
 		console.log('Something went wrong...', err);
-		res.sendStatus(400);
-		error(next);
+		return res.sendStatus(400);
 	}
 });
 
