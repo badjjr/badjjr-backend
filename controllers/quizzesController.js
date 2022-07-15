@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Quiz = require('../models/Quiz');
+const {
+	handleValidateOwnership,
+	handleValidationErrors,
+	handleErrors,
+} = require('../middleware/custom_errors');
+const { requireToken } = require('../middleware/auth');
 
 // INDEX: Get all quizzes
 // GET /api/quizzes
@@ -41,7 +47,7 @@ router.get('/categories/:category', async (req, res) => {
 
 // CREATE: Add new quiz
 // POST /api/quizzes
-router.post('/', async (req, res, next) => {
+router.post('/', requireToken, async (req, res, next) => {
 	try {
 		const newQuiz = await Quiz.create(req.body);
 		if (newQuiz) {
@@ -51,37 +57,42 @@ router.post('/', async (req, res, next) => {
 		}
 	} catch (err) {
 		console.log('Something went wrong...', err);
-		return res.sendStatus(400);
+		res.sendStatus(400);
+		next(err);
 	}
 });
 
 // UPDATE: Update quiz by id
 // PATCH /api/quizzes/:id
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', requireToken, async (req, res, next) => {
 	try {
-		const updatedQuiz = await Quiz.findByIdAndUpdate(req.params.id, req.body);
-		if (updatedQuiz) {
-			const quizzes = await Quiz.find({});
-			return res.json(quizzes);
+		const quiz = await Quiz.findById(req.params.id);
+		if (handleValidateOwnership(req, quiz)) {
+			Quiz.findByIdAndUpdate(req.params.id, req.body, {new: true})
+			.then((quiz) => res.json(quiz))
+			.catch(next)
 		}
 	} catch (err) {
 		console.log('Something went wrong...', err);
-		return res.sendStatus(400);
+		res.sendStatus(400);
+		next(err);
 	}
 });
 
 // DELETE: Remove quiz by id
 // DELETE /api/quizzes/:id
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', requireToken, async (req, res, next) => {
 	try {
-		const deletedQuiz = await Quiz.findByIdAndDelete(req.params.id);
+		const quiz = await Quiz.findById(req.params.id)
+		if (handleValidateOwnership(req, quiz)){const deletedQuiz = await Quiz.findByIdAndDelete(req.params.id);
 		if (deletedQuiz) {
 			const quizzes = await Quiz.find({});
 			return res.json(quizzes);
-		}
+		}}
 	} catch (err) {
 		console.log('Something went wrong...', err);
-		return res.sendStatus(400);
+		res.sendStatus(400);
+		error(next);
 	}
 });
 
