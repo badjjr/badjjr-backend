@@ -29,24 +29,24 @@ app.get('/', (req, res) => {
 
 // Quizzes Controller
 const quizzesController = require('./controllers/quizzesController');
-app.use('/api/quizzes/', quizzesController);
+app.use('/api/quizzes', quizzesController);
 
 // Questions Controller
 const questionsController = require('./controllers/questionsController');
 app.use('/api/questions', questionsController);
 
 // Users Controller
-const usersController = require('./controllers/usersController')
-app.use('/api', usersController)
+const usersController = require('./controllers/usersController');
+app.use('/api/users', usersController);
 
 //Redirect
 app.all('*', (req, res) => {
-	res.redirect('/')
-})
+	res.redirect('/');
+});
 
 //Error handling for user auth
-const { handleErrors } = require('./middleware/custom_errors')
-app.use(handleErrors)
+const { handleErrors } = require('./middleware/custom_errors');
+app.use(handleErrors);
 
 //=============================================================================
 // START SERVER
