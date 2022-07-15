@@ -35,6 +35,14 @@ app.use('/api/quizzes/', quizzesController);
 const questionsController = require('./controllers/questionsController');
 app.use('/api/questions', questionsController);
 
+// Users Controller
+const usersController = require('./controllers/usersController')
+app.use('/api', usersController)
+
+//Error handling for user auth
+const { handleErrors } = require('./middleware/custom_errors')
+app.use(handleErrors)
+
 //=============================================================================
 // START SERVER
 //=============================================================================
