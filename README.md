@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This is the backend, i.e., the API, for our full stack MERN application, [badjjr](https://badjjr.netlify.app).
+This is the backend of our full stack MERN application, [Badjjr](https://badjjr.netlify.app).
 
 It follows a RESTful architectural style and has full CRUD functionality. Here is what you can do with the Badjjr API:
 
@@ -23,9 +23,14 @@ It follows a RESTful architectural style and has full CRUD functionality. Here i
 
 \*You can create one or more questions in a single request.
 
+| User Request         | API Endpoint        |
+| -------------------- | ------------------- |
+| Create a new user    | `/api/users`        |
+| Get an existing user | `/api/users/signin` |
+
 ## Technologies
 
-The Badjjr API utilizes MongoDB, Express, Mongoose, CORS, and for deployment, Heroku.
+The backend utilizes MongoDB, Express, Mongoose, CORS, as well Heroku (for deployment) Passport (for authentication), and Bcrypt (for encryption).
 
 ## Installation
 
@@ -49,4 +54,4 @@ There is always room for improvement! If you have any suggestions, please submit
 
 ##
 
-🦡 Thank you for checking out Badjjr! 🦡
+✨ Thank you for checking out Badjjr! ✨
