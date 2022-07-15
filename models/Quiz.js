@@ -18,11 +18,6 @@ const quizSchema = new mongoose.Schema(
 			unique: false,
 		},
 		questions: [questionSchema],
-		owner: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User',
-			required: true
-		}
 	},
 	{ timestamps: true }
 );

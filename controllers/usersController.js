@@ -6,7 +6,7 @@ const { createUserToken } = require('../middleware/auth');
 
 //Create User/Sign Up
 //Post /api/user/new
-router.post('/user/new', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
 	try {
 		const hashedPassword = await bcrypt.hash(req.body.password, 5);
 		const newUser = await User.create({
@@ -23,15 +23,16 @@ router.post('/user/new', async (req, res, next) => {
 
 //Show User/Sign In
 //Post /api/user
-router.post('/user', async (req, res, next) => {
+router.post('/signin', async (req, res, next) => {
 	try {
 		const signIn = await User.findOne({ username: req.body.username })
 			.then((user) => createUserToken(req, user))
 			.then((token) => res.json({ token }))
+			.then(use)
 			.catch(next);
 	} catch (error) {
 		return next(error);
 	}
 });
 
-module.exports = router
+module.exports = router;
