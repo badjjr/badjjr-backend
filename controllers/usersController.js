@@ -28,6 +28,7 @@ router.post('/signin', async (req, res, next) => {
 		const signIn = await User.findOne({ username: req.body.username })
 			.then((user) => createUserToken(req, user))
 			.then((token) => res.json({ token }))
+			.then(use)
 			.catch(next);
 	} catch (error) {
 		return next(error);
